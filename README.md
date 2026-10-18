@@ -45,3 +45,7 @@ RLR uses logarithms of positive ratios and has singularities where its denominat
 On 2026-10-03 the original-API small CCM check passed on Windows. GitHub Actions runs the same check in a clean Linux environment, with the legacy rEDM version pinned. Full figure dependencies are deliberately outside that lightweight job. Changes to the historical scientific scripts should be assessed separately from maintenance of smoke.R.
 
 References: [CRAN archive](https://cran.r-project.org/src/contrib/Archive/rEDM/), [original ccm_means documentation](https://ha0ye.github.io/rEDM/reference/ccm_means.html), [current upstream rEDM](https://github.com/SugiharaLab/rEDM).
+
+## Related writing
+
+- [RLR_transform on the author's site](https://daikikumakura.github.io/software/rlr-transform.html): summary, status and links.
