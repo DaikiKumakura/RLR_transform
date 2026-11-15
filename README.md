@@ -1,51 +1,90 @@
 # RLR_transform
 
-Research scripts for compositional time series and CCM (Convergent Cross Mapping). These are figure scripts, not an R package. A small executable check is included; it does not reproduce all published figures or establish causal findings.
+**Research scripts on how transforming compositional time series changes
+the causal links that Convergent Cross Mapping (CCM) infers.**
 
-## Compatible environment
+Relative abundances, such as microbial community data, are compositional: the
+parts of each sample sum to a constant. These R scripts compare CCM on raw,
+compositional and RLR-transformed (log ratio) series, using simulated
+dynamics and public predator–prey data, and draw the figures of that
+analysis.
 
-The figure scripts call the historical `simplex()`, `ccm()` and `ccm_means()` interfaces. The verified small example uses **R 4.5.1 and rEDM 0.7.3**. Current rEDM 2.x uses a different API and cannot be substituted into these scripts without a reviewed migration. The original analysis environment was not recorded; the verified environment below is not claimed to be that original environment.
+> [!NOTE]
+> These are figure scripts, not an R package. A small executable check runs
+> in CI, but the full figure analyses have not been rerun, and the check does
+> not establish causal findings.
 
-Use a separate library. Installing a source package requires Rtools on Windows, or an R-compatible compiler on Linux/macOS.
+## Contents
+
+| Script | Input | Additional packages |
+| --- | --- | --- |
+| `Fig1.R` | coupled synthetic dynamics generated in the script | deSolve, rgr, tidyverse, tseries |
+| `Fig2.R` | synthetic dynamics generated in the script | tidyverse |
+| `Fig3.R` | synthetic dynamics generated in the script | deSolve, tidyverse, tseries, DT, ggsci |
+| `Fig4.R` | rEDM `paramecium_didinium` data | tidyverse, plotly, tseries |
+| `Fig5.R` | included `Fig5.csv` | tidyverse, plotly, tseries |
+| `FigS2.R` | rEDM `paramecium_didinium` data | tseries, DT, tidyverse |
+| `smoke.R` | synthetic data | rEDM 0.7.3 only |
+
+## Environment
+
+The scripts use the historical rEDM interface (`simplex()`, `ccm()`,
+`ccm_means()`). They run with **R 4.5.1 and rEDM 0.7.3**; current rEDM 2.x
+has a different interface and cannot be used without a reviewed migration.
+The original analysis environment was not recorded.
+
+Install rEDM 0.7.3 into a separate library (a source package: Rtools on
+Windows, a compiler on Linux and macOS):
 
 ```r
 dir.create(".r-library", showWarnings = FALSE)
 .libPaths(c(normalizePath(".r-library"), .libPaths()))
 install.packages(c("Rcpp", "RcppEigen"), repos = "https://cloud.r-project.org")
-install.packages("https://cran.r-project.org/src/contrib/Archive/rEDM/rEDM_0.7.3.tar.gz", repos = NULL, type = "source")
+install.packages(
+  "https://cran.r-project.org/src/contrib/Archive/rEDM/rEDM_0.7.3.tar.gz",
+  repos = NULL, type = "source"
+)
 ```
 
-From this repository directory, run:
+## Quick check
+
+From the repository folder:
 
 ```sh
 R_LIBS_USER="$PWD/.r-library" Rscript smoke.R
 ```
 
-On PowerShell, set `$env:R_LIBS_USER=(Resolve-Path .r-library).Path` before `Rscript smoke.R`.
+On PowerShell, set `$env:R_LIBS_USER=(Resolve-Path .r-library).Path` first.
+The check parses all six figure scripts, takes the transformations and the
+embedding and CCM functions from `Fig1.R`, and runs CCM on 120 synthetic
+observations (three library sizes, ten samples each, fixed seed) for raw,
+compositional and RLR series. Set `RLR_SMOKE_OUTPUT` to save the table. It
+checks that the code runs; it is not a new scientific result.
 
-The check parses all six figure scripts, extracts the original transformations and embedding/CCM functions from Fig1.R, and runs 120 retained synthetic observations with three library sizes and ten samples each. An explicit seed is supplied to CCM. It prints results for raw, compositional and RLR series. Set `RLR_SMOKE_OUTPUT` to save the table. Comparing these small runs is a runtime check, not a new scientific result.
+## Running the figures
 
-## Figure inputs and dependencies
+Run from the repository folder so that `Fig5.csv` is found, normally `Fig1.R`
+to `Fig5.R` and then `FigS2.R`, after installing the packages in the table.
+Use a separate copy of the folder: `Fig3.R` writes CSV and EPS files into the
+working folder. Several scripts repeat surrogate analyses and take much longer
+than `smoke.R`. Their stochastic results have not been compared with earlier
+outputs.
 
-| Script | Input | Additional packages |
-| --- | --- | --- |
-| Fig1.R | Coupled synthetic dynamics generated in the script | deSolve, rgr, tidyverse, tseries |
-| Fig2.R | Synthetic dynamics generated in the script | tidyverse |
-| Fig3.R | Synthetic dynamics generated in the script | deSolve, tidyverse, tseries, DT, ggsci |
-| Fig4.R | rEDM `paramecium_didinium` data | tidyverse, plotly, tseries |
-| Fig5.R | Included Fig5.csv | tidyverse, plotly, tseries |
-| FigS2.R | rEDM `paramecium_didinium` data | tseries, DT, tidyverse |
+RLR takes logarithms of ratios, so zero or negative counts and near-zero
+denominators need a deliberate treatment; no pseudocount is imposed here.
 
-Run from the repository directory so Fig5.csv resolves. The scripts can be run individually, normally Fig1.R through Fig5.R, then FigS2.R. Full runs require the additional packages above. Run those scripts in a separate copy because Fig3 writes named CSV/EPS outputs into the working directory. Do not overwrite prior results. Several scripts perform repeated surrogate analyses and can be substantially slower than smoke.R. Their stochastic figure results and numerical agreement with previous outputs have not been checked.
+## Validation
 
-RLR uses logarithms of positive ratios and has singularities where its denominator is zero. Zero/nonpositive counts or near-singular ratios require a deliberate analytical treatment; no pseudocount policy is imposed here.
+On 2026-10-03 the small CCM check passed on Windows. GitHub Actions runs the
+same check on Linux with rEDM 0.7.3 pinned; the full figure dependencies are
+outside that job.
 
-## Validation and maintenance
+## References
 
-On 2026-10-03 the original-API small CCM check passed on Windows. GitHub Actions runs the same check in a clean Linux environment, with the legacy rEDM version pinned. Full figure dependencies are deliberately outside that lightweight job. Changes to the historical scientific scripts should be assessed separately from maintenance of smoke.R.
+- [rEDM archive on CRAN](https://cran.r-project.org/src/contrib/Archive/rEDM/)
+- [Original `ccm_means` documentation](https://ha0ye.github.io/rEDM/reference/ccm_means.html)
+- [Current rEDM](https://github.com/SugiharaLab/rEDM)
 
-References: [CRAN archive](https://cran.r-project.org/src/contrib/Archive/rEDM/), [original ccm_means documentation](https://ha0ye.github.io/rEDM/reference/ccm_means.html), [current upstream rEDM](https://github.com/SugiharaLab/rEDM).
+## License
 
-## Related writing
-
-- [RLR_transform on the author's site](https://daikikumakura.github.io/software/rlr-transform.html): summary, status and links.
+MIT
