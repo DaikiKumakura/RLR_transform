@@ -90,4 +90,4 @@ outside that job.
 
 ## License
 
-MIT
+This project is licensed under MIT. See [LICENSE](LICENSE) for the license terms.
