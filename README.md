@@ -14,6 +14,9 @@ analysis.
 > in CI, but the full figure analyses have not been rerun, and the check does
 > not establish causal findings.
 
+Start with [Environment](#environment) and [Quick check](#quick-check).
+Use [Running the figures](#running-the-figures) for the full analysis.
+
 ## Contents
 
 | Script | Input | Additional packages |
