@@ -17,19 +17,9 @@ analysis.
 Start with [Environment](#environment) and [Quick check](#quick-check).
 Use [Running the figures](#running-the-figures) for the full analysis.
 
-## Contents
+<a id="environment"></a>
 
-| Script | Input | Additional packages |
-| --- | --- | --- |
-| `Fig1.R` | coupled synthetic dynamics generated in the script | deSolve, rgr, tidyverse, tseries |
-| `Fig2.R` | synthetic dynamics generated in the script | tidyverse |
-| `Fig3.R` | synthetic dynamics generated in the script | deSolve, tidyverse, tseries, DT, ggsci |
-| `Fig4.R` | rEDM `paramecium_didinium` data | tidyverse, plotly, tseries |
-| `Fig5.R` | included `Fig5.csv` | tidyverse, plotly, tseries |
-| `FigS2.R` | rEDM `paramecium_didinium` data | tseries, DT, tidyverse |
-| `smoke.R` | synthetic data | rEDM 0.7.3 only |
-
-## Environment
+## Installation
 
 The scripts use the historical rEDM interface (`simplex()`, `ccm()`,
 `ccm_means()`). They run with **R 4.5.1 and rEDM 0.7.3**; current rEDM 2.x
@@ -49,7 +39,9 @@ install.packages(
 )
 ```
 
-## Quick check
+<a id="quick-check"></a>
+
+## Quick start
 
 From the repository folder:
 
@@ -64,6 +56,22 @@ observations (three library sizes, ten samples each, fixed seed) for raw,
 compositional and RLR series. Set `RLR_SMOKE_OUTPUT` to save the table. It
 checks that the code runs; it is not a new scientific result.
 
+## Documentation
+
+[Script inventory](#contents) · [Running the figures](#running-the-figures)
+
+## Contents
+
+| Script | Input | Additional packages |
+| --- | --- | --- |
+| `Fig1.R` | coupled synthetic dynamics generated in the script | deSolve, rgr, tidyverse, tseries |
+| `Fig2.R` | synthetic dynamics generated in the script | tidyverse |
+| `Fig3.R` | synthetic dynamics generated in the script | deSolve, tidyverse, tseries, DT, ggsci |
+| `Fig4.R` | rEDM `paramecium_didinium` data | tidyverse, plotly, tseries |
+| `Fig5.R` | included `Fig5.csv` | tidyverse, plotly, tseries |
+| `FigS2.R` | rEDM `paramecium_didinium` data | tseries, DT, tidyverse |
+| `smoke.R` | synthetic data | rEDM 0.7.3 only |
+
 ## Running the figures
 
 Run from the repository folder so that `Fig5.csv` is found, normally `Fig1.R`
@@ -76,13 +84,17 @@ outputs.
 RLR takes logarithms of ratios, so zero or negative counts and near-zero
 denominators need a deliberate treatment; no pseudocount is imposed here.
 
-## Validation
+<a id="validation"></a>
+
+## Validation and limitations
 
 On 2026-10-03 the small CCM check passed on Windows. GitHub Actions runs the
 same check on Linux with rEDM 0.7.3 pinned; the full figure dependencies are
 outside that job.
 
-## References
+<a id="references"></a>
+
+## Citation
 
 - [rEDM archive on CRAN](https://cran.r-project.org/src/contrib/Archive/rEDM/)
 - [Original `ccm_means` documentation](https://ha0ye.github.io/rEDM/reference/ccm_means.html)
