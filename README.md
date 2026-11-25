@@ -96,6 +96,10 @@ outside that job.
 
 ## Citation
 
+Kumakura, D. *RLR_transform* [Software]. [GitHub repository](https://github.com/DaikiKumakura/RLR_transform).
+
+Related references:
+
 - [rEDM archive on CRAN](https://cran.r-project.org/src/contrib/Archive/rEDM/)
 - [Original `ccm_means` documentation](https://ha0ye.github.io/rEDM/reference/ccm_means.html)
 - [Current rEDM](https://github.com/SugiharaLab/rEDM)
