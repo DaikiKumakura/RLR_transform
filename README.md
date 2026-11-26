@@ -31,6 +31,12 @@ From the repository folder:
 R_LIBS_USER="$PWD/.r-library" Rscript smoke.R
 ```
 
+The check runs CCM on 120 synthetic observations, as raw, compositional and RLR (log ratio) series. It prints a
+table of 9 rows (`raw`, `composition` and `rlr`, each at library sizes 20, 40 and 60), with the columns
+`representation`, `lib_size`, `rho` (CCM skill) and `E` (embedding dimension), and ends with the line
+`Small original-API CCM smoke check passed; full figures are not validated.` It checks that the code runs; it is
+not a scientific result. The figure scripts `Fig1.R` to `Fig5.R` and `FigS2.R` are run from the same folder.
+
 ## Documentation
 
 [Usage guide](https://github.com/DaikiKumakura/RLR_transform/blob/main/README-GUIDE.md)
